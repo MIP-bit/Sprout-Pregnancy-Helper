@@ -1,0 +1,270 @@
+/* enqueued after ab block plugin css files to override those styles */
+
+.mtb-blog-author-block .gb-layout-column-wrap {
+	grid-template-columns: 150px auto;
+	grid-gap: 25px;
+}
+
+.mtb-blog-author-block .wp-block-image figure {
+	margin: 0;
+	width: 150px;
+}
+
+.mtb-blog-author-block {
+	margin-top: 58px;
+}
+
+.mtb-blog-author-block .wp-block-image {
+	margin: 0;
+}
+
+.mtb-blog-author-block img {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+}
+
+.mtb-blog-author-block p {
+	font-size: 15px;
+}
+
+.gb-block-container h3,
+.gb-block-post-grid .gb-post-grid-items .gb-block-post-grid-title {
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 1.2;
+	margin: 0 0 10px;
+	text-transform: none !important;
+}
+
+
+.mtb-study-list td.title-column,
+.mtb-fact-sheet-list td.title-column {
+	text-align: left;
+	align: left;
+}
+
+.mtb-fact-sheet-list td.pdf-column .fs-list-pdf-label {
+	display: inline-block;
+}
+
+.mtb-fact-sheet-list td.title-column {
+}
+
+.mtb-study-list td.pdf-column,
+.mtb-fact-sheet-list td.pdf-column {
+	text-align: right;
+	align: right;
+}
+
+.mtb-fact-sheet-list td.pdf-column ul.mtb-fslist-langs {
+	float: right;
+	margin: 0;
+}
+
+.mtb-fact-sheet-list td.pdf-column .mtb-fslist-langs li {
+	list-style: none;
+	float: left;
+	margin-left: 5px;
+	margin-bottom: 0;
+}
+
+.mtb-study-list details,
+.mtb-fact-sheet-list details,
+.gb-block-accordion {
+	margin-bottom: 30px;
+}
+
+.mtb-study-list details:not([open]) + details,
+.mtb-fact-sheet-list details:not([open]) + details,
+.gb-block-accordion+.gb-block-accordion {
+	margin-top: -29px;
+}
+
+.mtb-study-list details summary,
+.mtb-fact-sheet-list details summary,
+.gb-block-accordion .gb-accordion-title {
+	background: #F9F9FF;
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 45px;
+	padding-right: 85px;
+	font-weight: bold;
+	color: #261639;
+	cursor: pointer;
+}
+
+.mtb-study-list details[open] summary,
+.mtb-fact-sheet-list details[open] summary,
+.gb-block-accordion details[open] .gb-accordion-title {
+	background: #D5D5D5;
+}
+
+.mtb-study-list details > summary::-webkit-details-marker,
+.mtb-fact-sheet-list details > summary::-webkit-details-marker,
+.gb-block-accordion details > summary::-webkit-details-marker {
+	display: none;
+}
+
+.mtb-study-list details > .list-container,
+.mtb-fact-sheet-list details > .list-container,
+.gb-block-accordion .gb-accordion-text {
+	padding: 0;
+	margin: 45px 50px;
+}
+
+.mtb-study-list details > summary,
+.mtb-fact-sheet-list details > summary,
+.gb-block-accordion details > summary {
+	list-style: none;
+	position: relative;
+}
+
+.mtb-study-list details > summary:after,
+.mtb-fact-sheet-list details > summary:after,
+.gb-block-accordion details > summary:after {
+	content: "\e5cf";
+	color: #261639;
+	font-size: 40px;
+	line-height: 1;
+	font-family: "Material Icons";
+	position: absolute;
+	right: 45px;
+	top: 10px;
+}
+
+.mtb-study-list details[open] > summary:after,
+.mtb-fact-sheet-list details[open] > summary:after,
+.gb-block-accordion details[open] > summary:after {
+	content: "\e5ce";
+	color: #261639;
+	font-size: 40px;
+	line-height: 1;
+	font-family: "Material Icons";
+	position: absolute;
+	right: 45px;
+	top: 10px;
+}
+
+.gb-button {
+	line-height: normal !important;
+}
+
+.gb-button:hover {
+        box-shadow: none !important;
+}
+
+.mtb-homepage-header.gb-block-container .gb-container-image {
+	object-position: center top;
+}
+
+/* Media Queries
+---------------------------------------------------------------------------- */
+
+@media only screen and (max-width: 1280px) {
+}
+
+@media only screen and (max-width: 1023px) {
+
+	.mtb-fact-sheet-list td.pdf-column {
+		display: none;
+	}
+
+}
+
+@media only screen and (max-width: 782px) {
+
+	.mtb-hp-discover-studies-image {
+		display: none;
+	}
+
+	/* override 600px breakpoint of AB column layouts */
+	.gb-layout-columns-2>.gb-layout-column-wrap.gb-is-responsive-column {
+		-ms-grid-columns: 1fr;
+		grid-template-columns: 1fr;
+		grid-template-areas: "col1" "col2"
+	}
+
+	.gb-layout-columns-3>.gb-layout-column-wrap.gb-is-responsive-column {
+		-ms-grid-columns: 1fr;
+		grid-template-columns: 1fr;
+		grid-template-areas: "col1" "col2" "col3"
+	}
+
+	.gb-3-col-widecenter>.gb-layout-column-wrap.gb-is-responsive-column {
+		-ms-grid-columns: 1fr;
+		grid-template-columns: 1fr
+	}
+
+	.gb-3-col-wideleft>.gb-layout-column-wrap.gb-is-responsive-column {
+		-ms-grid-columns: 1fr;
+		grid-template-columns: 1fr
+	}
+
+	.gb-3-col-wideright>.gb-layout-column-wrap.gb-is-responsive-column {
+		-ms-grid-columns: 1fr;
+		grid-template-columns: 1fr
+	}
+
+	.gb-layout-columns-4>.gb-layout-column-wrap.gb-is-responsive-column {
+		-ms-grid-columns: 1fr;
+		grid-template-columns: 1fr;
+		grid-template-areas: "col1" "col2" "col3" "col4"
+	}
+
+	.gb-layout-columns-5>.gb-layout-column-wrap.gb-is-responsive-column {
+		-ms-grid-columns: 1fr;
+		grid-template-columns: 1fr;
+		grid-template-areas: "col1" "col2" "col3" "col4" "col5"
+	}
+
+	.gb-layout-columns-6>.gb-layout-column-wrap.gb-is-responsive-column {
+		-ms-grid-columns: 1fr;
+		grid-template-columns: 1fr;
+		grid-template-areas: "col1" "col2" "col3" "col4" "col5" "col6"
+	}
+
+	.wp-block-genesis-blocks-gb-column.gb-block-layout-column {
+		margin-bottom: 2em;
+	}
+
+	.wp-block-genesis-blocks-gb-column.gb-block-layout-column:last-of-type {
+		margin-bottom: 0;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.mtb-study-list details summary,
+	.mtb-fact-sheet-list details summary,
+	.gb-block-accordion .gb-accordion-title {
+		padding-left: 22px;
+		padding-right: 57px;
+	}
+	.mtb-study-list details > summary:after,
+	.mtb-fact-sheet-list details > summary:after,
+	.gb-block-accordion details > summary:after {
+		right: 17px;
+	}
+
+	.mtb-study-list details[open] > summary:after,
+	.mtb-fact-sheet-list details[open] > summary:after,
+	.gb-block-accordion details[open] > summary:after {
+		right: 17px;
+	}
+
+	.mtb-blog-author-block .wp-block-genesis-blocks-gb-column:first-of-type .gb-block-layout-column-inner {
+		display: flex;
+	}
+
+	.mtb-blog-author-block img {
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.mtb-study-list details > .list-container,
+	.mtb-fact-sheet-list details > .list-container,
+	.gb-block-accordion .gb-accordion-text {
+		padding: 0;
+		margin: 22px 25px;
+	}
+
+}

@@ -1,0 +1,643 @@
+/* MTB Table Styles */
+
+.wp-block-table.mtb-privacy-table table {
+	line-height: inherit;
+}
+
+.wp-block-table.mtb-privacy-table td:first-of-type,
+.wp-block-table.mtb-privacy-table th:first-of-type {
+	width: 20%;
+}
+
+.wp-block-table.mtb-privacy-table th {
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	vertical-align: bottom;
+}
+
+.wp-block-table.mtb-privacy-table td {
+	border-left: 0;
+	border-right: 0;
+	vertical-align: top;
+}
+
+@media only screen and (max-width: 782px) {
+
+	.wp-block-table.mtb-privacy-table td, 
+	.wp-block-table.mtb-privacy-table th { 
+		width: 100%; 
+		display: block;
+		border-top: 0;
+	}
+
+	.wp-block-table.mtb-privacy-table td:last-of-type {
+		border-bottom: 2px solid;
+	}
+
+	.wp-block-table.mtb-privacy-table td:first-of-type,
+	.wp-block-table.mtb-privacy-table th:first-of-type {
+		width: 70%;
+	}
+}
+
+/* MTB COVID-19 vaccine popup
+---------------------------------------------------------------------------- */
+.ui-dialog.ui-widget-content {
+	background: #522e83;
+	border: none;
+}
+
+.ui-dialog-titlebar {
+	background: #1b0f2b;
+	border: none;
+	color: #ffffff;
+	line-height: 1;
+	text-align: center;
+}
+
+.ui-dialog-titlebar-close:before {
+	line-height: 1;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+	padding: 0;
+}
+
+.ui-dialog.ui-widget-content a {
+	color: #c3ace2;
+}
+
+.ui-dialog.ui-widget-content a:hover {
+	color: #f0ebf8;
+}
+
+.mtb-covid-dialog {
+	color: #ffffff;
+	display: none;
+	font-size: 18px;
+}
+
+/* MTB block on homepage.
+---------------------------------------------------------------------------- */
+.mtb-hp-block h1 {
+	font-family: 'Nunito Sans', sans-serif;
+	font-size: 52px;
+	font-weight: normal;
+}
+
+.mtb-hp-block p {
+	font-size: 24px;
+}
+
+.mtb-full-width-container {
+	padding-left: 8%;
+	padding-right: 8%;
+}
+
+.mtb-full-width-container .gb-container-content {
+	max-width: 1280px;
+}
+
+.mtb-banner-bkg-1 .gb-container-image-wrap {
+	z-index: -1;
+}
+
+.mtb-banner-bkg-1 {
+	background: linear-gradient(to bottom, rgba(255,255,255,0) 0,rgba(255,255,255,0) 150px,rgba(255,255,255,0.6) 258px,rgba(255,255,255,0.6) calc(100% - 100px),rgba(255,255,255,0.5) calc(100% - 77px),rgba(255,255,256,0) 100%);
+}
+
+.mtb-txt-bkg-light {
+	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,0.6+20,0.6+80,0+100 */
+	background: -moz-linear-gradient(left,  hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0.6) 20%, hsla(0,0%,100%,0.6) 80%, hsla(0,0%,100%,0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  hsla(0,0%,100%,0) 0%,hsla(0,0%,100%,0.6) 20%,hsla(0,0%,100%,0.6) 80%,hsla(0,0%,100%,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  hsla(0,0%,100%,0) 0%,hsla(0,0%,100%,0.6) 20%,hsla(0,0%,100%,0.6) 80%,hsla(0,0%,100%,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 */
+}
+
+.mtb-txt-bkg-light-2 {
+	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0.6+80,0.6+99,0+100 */
+	background: -moz-linear-gradient(left,  hsla(0,0%,100%,0.4) 0%, hsla(0,0%,100%,0.4) 80%, hsla(0,0%,100%,0.4) 99%, hsla(0,0%,100%,0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  hsla(0,0%,100%,0.4) 0%,hsla(0,0%,100%,0.4) 80%,hsla(0,0%,100%,0.4) 99%,hsla(0,0%,100%,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  hsla(0,0%,100%,0.4) 0%,hsla(0,0%,100%,0.4) 80%,hsla(0,0%,100%,0.4) 99%,hsla(0,0%,100%,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.mtb-txt-bkg-light-3 {
+	/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0.6+80,0.6+99,0+100 */
+	background: -moz-linear-gradient(left,  hsla(0,0%,100%,0.25) 0%, hsla(0,0%,100%,0.25) 80%, hsla(0,0%,100%,0.25) 99%, hsla(0,0%,100%,0) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left,  hsla(0,0%,100%,0.6) 0%,hsla(0,0%,100%,0.6) 80%,hsla(0,0%,100%,0.25) 99%,hsla(0,0%,100%,0) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right,  hsla(0,0%,100%,0.25) 0%,hsla(0,0%,100%,0.25) 80%,hsla(0,0%,100%,0.25) 99%,hsla(0,0%,100%,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+.mtb-txt-bkg-light, .mtb-txt-bkg-light-2, .mtb-txt-bkg-light-3 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+/* MTB Reusable page header blocks
+---------------------------------------------------------------------------- */
+.mtb-page-header.gb-block-container {
+	min-height: 344px;
+	padding-top: 200px;
+	padding-bottom: 10px;
+}
+
+.mtb-page-header.gb-block-container.mtb-homepage-header {
+	min-height: 500px;
+	padding-top: 258px;
+	line-height: 1.15;
+	padding-bottom: 56px;
+}
+
+.mtb-page-header.gb-block-container.mtb-homepage-header .mtb-std-button a {
+	margin-top: 0 !important;
+}
+
+/* MTB Reusable single, centered CTA block
+---------------------------------------------------------------------------- */
+.mtb-bottom-cta {
+	margin-bottom: 0;
+}
+
+.mtb-single-cta.gb-block-cta.alignfull,
+.mtb-global-cta-wrap .gb-block-cta.alignfull {
+	padding: 35px 3% ;
+}
+
+/* MTB Reusable three-column CTA block
+---------------------------------------------------------------------------- */
+.mtb-3-col-cta-row {
+	padding: 5.88% 8% ;
+}
+
+.mtb-3-col-cta h3 {
+	color:#fff;
+	margin-top: 0;
+	margin-bottom: 15px;
+}
+
+.mtb-3-col-cta p {
+	line-height: 24px;
+	font-size: 18px;
+	margin-bottom: 10px;
+}
+
+.mtb-3-col-cta .mtb-std-block-btn {
+	margin-bottom: 0;
+}
+
+.mtb-3-col-cta .mtb-std-block-btn .wp-element-button,
+.mtb-3-col-cta .mtb-std-block-btn .gb-button,
+.mtb-3-col-cta .mtb-std-block-btn a {
+	line-height: 18px !important;
+	margin-top: 0;
+}
+
+.mtb-3-col-cta .gb-block-layout-column-inner {
+	padding-right: 8%;
+	padding-left: 8%;
+	padding-bottom: 16px;
+	padding-top: 13%;
+	min-height: 175px;
+}
+
+.mtb-cta-radius .gb-block-layout-column-inner {
+	border-radius: 0 24px 0 24px;
+}
+
+/* MTB Reusable Q & A Block
+---------------------------------------------------------------------------- */
+.mtb-q-n-a-block {
+	padding-left: 30px;
+	border-color: #ED7818;
+	border-style: none none none solid;
+	border-width: 6px;
+	margin-bottom: 55px;
+}
+
+.mtb-q-n-a-block p {
+	margin-left: 46px;
+}
+
+.mtb-q-n-a-block p:last-of-type {
+	margin-bottom: 0;
+}
+
+.mtb-q-n-a-block p.mtb-question:before {
+	content: "Q:";
+	font-weight: bold;
+	display: block;
+	float: left;
+	margin-left: -46px;
+}
+
+.mtb-q-n-a-block p.mtb-answer:before {
+	content: "A:";
+	font-weight: bold;
+	display: block;
+	float: left;
+	margin-left: -46px;
+}
+
+.mtb-q-n-a-block p.mtb-question-es:before {
+	content: "P:";
+	font-weight: bold;
+	display: block;
+	float: left;
+	margin-left: -46px;
+}
+
+.mtb-q-n-a-block p.mtb-answer-es:before {
+	content: "R:";
+	font-weight: bold;
+	display: block;
+	float: left;
+	margin-left: -46px;
+}
+
+/* MTB Reusable two-column block with background images
+---------------------------------------------------------------------------- */
+.mtb-two-col-container h2 {
+	margin-bottom: 40px;
+	margin-top: 0;
+}
+
+.mtb-two-col-container .gb-container-content {
+	padding-bottom: 34px;
+	padding-top: 80px;
+}
+
+.mtb-two-col-bkg {
+	margin-bottom: 2em;
+}
+
+.mtb-two-col-bkg h3,
+.mtb-two-col-bkg h2 {
+	color:#fff;
+	font-size: 18px !important;
+	margin-top: 0;
+	margin-bottom: 15px !important;
+}
+
+.mtb-two-col-bkg p {
+	line-height: 24px;
+	font-size: 18px;
+}
+
+.mtb-two-col-bkg .gb-block-layout-column-inner {
+	padding-right: 8%;
+	padding-left: 8%;
+	padding-bottom: 21px;
+	padding-top: 21px;
+	min-height: 290px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+/* .gb-is-responsive-column,
+.mtb-two-col-bkg .gb-block-layout-column-gap-2 {
+	row-gap: 2em;
+}
+*/
+
+.mtb-two-col-bkg .mtb-std-block-btn.gb-block-button {
+	margin-bottom: 15px;
+}
+
+.mtb-two-col-bkg .mtb-std-block-btn .wp-element-button,
+.mtb-two-col-bkg .mtb-std-block-btn .gb-button,
+.mtb-two-col-bkg .mtb-std-block-btn a {
+	line-height: 18px !important;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+/* MTB Standard Buttons
+---------------------------------------------------------------------------- */
+.button.par-to-top-button {
+	font-size: 36px;
+	padding-bottom: 3px;
+	padding-top: 7px;
+	padding-right: 8px;
+	padding-left: 9px;
+	line-height: .8;
+	color: #5F5F5F;
+	border-color: #5F5F5F;
+	background-color: transparent;
+	border-radius: 0;
+	border-width: 2px;
+	border-style: solid;
+}
+
+.mtb-homepage-post-grid .gb-block-post-grid .gb-block-post-grid-more-link, 
+.mtb-std-block-btn .gb-button,
+.mtb-std-block-btn .wp-element-button {
+	font-family: 'Nunito Sans', sans-serif !important;
+        text-align: left;
+        text-decoration: none !important;
+        text-transform: uppercase;
+        border: none !important;
+        font-weight: 800 !important;
+        font-style: normal;
+        padding: 0 !important;
+        font-size: 18px !important;
+        letter-spacing: 1px;
+        margin-top: 20px;
+        display: inline-block;
+        box-sizing: border-box;
+        line-height: 27px;
+        background-color: transparent !important;
+	border-radius: 0 !important;
+	color: #26a68b !important;
+}
+
+.mtb-homepage-post-grid .gb-block-post-grid .gb-block-post-grid-more-link::after,
+.mtb-std-block-btn .wp-element-button::after,
+.mtb-std-block-btn .gb-button::after {
+	content: " ⟶";
+	position: relative;
+	font-size: 35px;
+	top: -1px;
+	left: -2px;
+}
+
+.mtb-no-results-cta .wp-block-button__link {
+	margin-bottom: 20px;
+}
+
+.mtb-no-results-cta .mtb-make-suggestion {
+	font-size: 16px;
+        font-style: italic;
+	margin-top: 20px;
+}
+
+.mtb-homepage-post-grid .gb-block-post-grid .gb-block-post-grid-more-link:hover,
+.mtb-std-block-btn .wp-element-button:hover,
+.site-container .wp-block-button.mtb-std-block-btn a.wp-block-button__link:hover,
+.mtb-std-block-btn .gb-button:hover {
+        background-color: transparent !important;
+        font-weight: 800 !important;
+        text-decoration: none;
+	box-shadow: none !important;
+	color: #7a47bf !important;
+}
+
+.light-text .mtb-std-block-btn .wp-element-button,
+.light-text .mtb-std-block-btn .gb-button {
+        color: #fff !important;
+}
+
+.light-text .mtb-std-block-btn a.wp-block-button__link:hover,
+.site-container .light-text .wp-block-button.mtb-std-block-btn a.wp-block-button__link:hover,
+.light-text .mtb-std-block-btn .wp-element-button:hover,
+.light-text .mtb-std-block-btn .gb-button:hover {
+	opacity: 0.5;
+        background-color: transparent !important;
+        color: #fff !important;
+        font-weight: 800;
+        text-decoration: none;
+	box-shadow: none;
+	color: currentColor !important;
+}
+
+.mtb-std-block-btn .wp-element-button:focus,
+.mtb-std-block-btn .gb-button:focus {
+	box-shadow: none;
+}
+
+.mtb-std-button .gb-button {
+	font-family: 'Nunito Sans', sans-serif !important;
+        text-align: center;
+        text-decoration: none !important;
+        text-transform: uppercase;
+        border: 2px solid #c35027 !important;
+        color: #c35027 !important;
+        -webkit-text-fill-color: #c35027 !important;
+        font-weight: normal;
+        font-style: normal;
+        padding: 12px 20px !important;
+        font-size: 18px !important;
+        /* letter-spacing: 1px; */
+        margin-top: 20px;
+        display: inline-block;
+        box-sizing: border-box;
+        line-height: normal;
+        background-color: transparent !important;
+	border-radius: 0 !important;
+}
+
+.mtb-std-button .gb-button:hover {
+        background-color: #c35027 !important;
+        color: #fff !important;
+        -webkit-text-fill-color: #fff !important;
+        font-weight: normal;
+        text-decoration: none;
+}
+
+/* MTB White Button
+---------------------------------------------------------------------------- */
+.mtb-white-button .gb-button {
+	font-family: 'Nunito Sans', sans-serif !important;
+        text-align: center;
+        text-decoration: none !important;
+        text-transform: uppercase;
+        border: 2px solid #ffffff !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        font-weight: normal;
+        font-style: normal;
+        padding: 12px 20px !important;
+        font-size: 18px !important;
+        /* letter-spacing: 1px; */
+        margin-top: 20px;
+        display: inline-block;
+        box-sizing: border-box;
+        line-height: normal;
+        background-color: transparent !important;
+	border-radius: 0 !important;
+}
+
+.mtb-white-button .gb-button:hover {
+        background-color: #c35027 !important;
+        color: #fff !important;
+        -webkit-text-fill-color: #fff !important;
+        font-weight: normal;
+        text-decoration: none;
+        border: 2px solid #c35027 !important;
+}
+
+figure.mtb-3-col-img {
+	line-height: 0;
+}
+
+figure.mtb-screen-img-10 img {
+	opacity: .1;
+}
+
+figure.mtb-screen-img-20 img {
+	opacity: .2;
+}
+
+figure.mtb-screen-img-30 img {
+	opacity: .3;
+}
+
+figure.mtb-screen-img-40 img {
+	opacity: .4;
+}
+
+figure.mtb-screen-img-50 img {
+	opacity: .5;
+}
+
+figure.mtb-screen-img-60 img {
+	opacity: .6;
+}
+
+figure.mtb-screen-img-70 img {
+	opacity: .7;
+}
+
+figure.mtb-screen-img-80 img {
+	opacity: .8;
+}
+
+figure.mtb-screen-img-90 img {
+	opacity: .9;
+}
+
+.mtb-purple-plus-3-bkg {
+	background-color: #f0ebf8;
+}
+
+.mtb-purple-plus-2-bkg {
+	background-color: #c3ace2;
+}
+
+.mtb-purple-plus-1-bkg {
+	background-color: #7a47bf;
+}
+
+.mtb-primary-purple-bkg {
+	background-color: #522e83;
+}
+
+.mtb-purple-minus-2-bkg {
+	background-color: #1b0f2b;
+}
+
+.mtb-purple-minus-1-bkg {
+	background-color: #42256A;
+}
+
+.mtb-green-plus-3-bkg {
+	background-color: #e3f9f4;
+}
+
+.mtb-green-plus-2-bkg {
+	background-color: #acecde;
+}
+
+.mtb-green-plus-1-bkg {
+	background-color: #67dcc3;
+}
+
+.mtb-primary-green-bkg {
+	background-color: #26a68b;
+}
+
+.mtb-green-minus-2-bkg {
+	background-color: #0a2a23;
+}
+
+.mtb-green-minus-1-bkg {
+	background-color: #196f5d;
+}
+
+.mtb-orange-plus-1-bkg {
+	background-color: #f8cba6;
+}
+
+.mtb-orange-CTA-bkg {
+	background-color: #ed7818;
+}
+
+.mtb-orange-minus-1-bkg {
+	background-color: #c3600f;
+}
+
+.mtb-neutral-plus-2-bkg {
+	background-color: #F9F9FF;
+}
+
+.mtb-neutral-plus-1-bkg {
+	background-color: #b4b4b4;
+}
+
+.mtb-neutral-bkg {
+	background-color: #5F5F5F;
+}
+
+.mtb-neutral-minus-1-bkg {
+	background-color: #161528;
+}
+
+.wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
+	max-width: 100%;
+}
+
+.mtb-homepage-post-grid .gb-block-post-grid-image {
+	max-height: 230px;
+}
+
+.mtb-homepage-post-grid .gb-block-post-grid-image img {
+	max-height: 230px;
+	height: 230px;
+	object-fit: cover;
+}
+
+.gb-block-post-grid .gb-post-grid-items .gb-block-post-grid-title a:hover {
+	color: #7a47bf !important;
+	text-decoration: none;
+}
+
+.gb-block-post-grid .gb-post-grid-items .gb-block-post-grid-title a {
+	color: #1b0f2b;
+	text-decoration: none;
+}
+
+/* Override Metaport Styles */
+.server_msg {
+	background: none;
+}
+
+/* Override WMPL Language Switcher style */
+.wpml-ls-legacy-dropdown > ul {
+	z-index: 1001;
+}
+
+/* MTB after footer CTA widget area. */
+
+.after-footer-cta {
+	width: 100%;
+	background-color: #F9F9FF;
+	padding-right: 8%;
+	padding-left: 8%;
+}
+
+.after-footer-cta .wrap {
+	max-width: 1120px;
+	border-top: 1px solid #b4b4b4;
+}
+
+.after-footer-cta .widget {
+	margin-bottom: 0;
+}
+
+.after-footer-cta .textwidget {
+	text-align: center;
+	font-size: 16px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}

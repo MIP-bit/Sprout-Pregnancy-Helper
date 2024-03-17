@@ -1,0 +1,116 @@
+var loginBox, resetPasswordBox, joinApp, EditProfile, changePassword, payDues;
+
+loginBox = [
+  {field: "email", req: true, err_msg: "Please enter a valid E-mail Id."},
+  {field: "password", req: true, err_msg: "Please enter the password."}
+];
+
+resetPasswordBox = [
+  {field: "resetemail", req: true, err_msg: "Please enter a valid E-mail Id."}
+];
+
+changePassword = [
+  {field: "email", req: true, err_msg: "Please enter a valid E-mail Id."},
+  {field: "oldpass", req: true, err_msg: "Please enter the password of length 6 or above."},
+  {field: "newpass", req: true, err_msg: "New password must be of length 6 or above."}
+];
+
+joinApp = [
+  {field: "email", req: true, err_msg: "Please enter a valid E-mail Id."},
+  {field: "pass", req: true, err_msg: "Please enter the password of length 6 or above."},
+  {field: "repass", req: true, err_msg: "Retyped password does not match."},
+  {field: "mcat", req: true, err_msg: "Please select a membership level."},
+  {field: "Fileupload", req: true, err_msg: "Please upload a proof for student status."},
+  {field: "prefix", req: true, dd_field: "prefix", err_msg: "Please select a prefix from dropdown."},
+  {field: "fname", req: true, err_msg: "Please enter the First Name."},
+  {field: "mname"},
+  {field: "lname", req: true, err_msg: "Please enter the Last Name."},
+  {field: "suffix", dd_field: "suffix"},
+  {field: "orginv", dd_field: "orginv"},
+  {field: "orginv_other"},
+  {field: "desig[]", dd_field: "desig"},
+  {field: "jtitle", req: true, err_msg: "Please enter the Job title."},
+  {field: "company", req: true, err_msg: "Please enter the affiliation."},
+  {field: "biography"},
+  {field: "search_dir"},
+  {field: "tis_info"},
+  {field: "tis_affiliated"},
+  {field: "tis_role"},
+  {field: "country", req: true, err_msg: "Please select a country.", dd_field: "country"},
+  {field: "add1", req: true, err_msg: "Please enter the Address 1."},
+  {field: "add2"},
+  {field: "add3"},
+  {field: "city", req: true, err_msg: "Please enter the City."},
+  {field: "state", req: true, err_msg: "Please enter the State."},
+  {field: "us_state", req: true, err_msg: "Please select a State", dd_field: "state"},
+  {field: "zip", req: true, err_msg: "Please enter the zip."},
+  {field: "phone", req: true, err_msg: "Please enter the Phone number."},
+  {field: "fax"},
+  {field: "url"},
+  {field: "consent", req: true, err_msg: "Please accept the consent."},
+  {field: "media_req"},
+  {field: "media_req_exp"},
+  {field: "committees[]", dd_field: "committees"},
+  {field: "don_kay"},
+  {field: "don_susan"},
+  {field: "ethics", req: true, err_msg: "Please agree to the OTIS Code of Ethics by clicking the checkbox above."}
+];
+
+EditProfile = [
+  {field: "email", req: true, err_msg: "Please enter a valid E-mail Id."},
+  {field: "prefix", req: true, err_msg: "Please select a prefix from dropdown.", dd_field: "prefix"},
+  {field: "fname", req: true, err_msg: "Please enter the First Name."},
+  {field: "mname"},
+  {field: "lname", req: true, err_msg: "Please enter the Last Name."},
+  {field: "suffix", dd_field: "suffix"},
+  {field: "orginv", dd_field: "orginv"},
+  {field: "orginv_other"},
+  {field: "desig[]", dd_field: "desig"},
+  {field: "jtitle", req: true, err_msg: "Please enter the Job title."},
+  {field: "company", req: true, err_msg: "Please enter the affiliation."},
+  {field: "search_dir"},
+  {field: "tis_info"},
+  {field: "tis_affiliated"},
+  {field: "tis_role"},
+  {field: "biography"},
+  {field: "country", req: true, err_msg: "Please select a country.", dd_field: "country"},
+  {field: "add1", req: true, err_msg: "Please enter the Address 1."},
+  {field: "add2"},
+  {field: "add3"},
+  {field: "city", req: true, err_msg: "Please enter the City."},
+  {field: "state", req: true, err_msg: "Please enter the State."},
+  {field: "us_state", req: true, err_msg: "Please select a State", dd_field: "state"},
+  {field: "zip", req: true, err_msg: "Please enter the zip."},
+  {field: "phone", req: true, err_msg: "Please enter the Phone number."},
+  {field: "fax"},
+  {field: "url"},
+  {field: "consent", req: true, err_msg: "Please accept the consent."},
+  {field: "media_req"},
+  {field: "media_req_exp"},
+  {field: "committees[]", dd_field: "committees"},
+  {field: "don_kay"},
+  {field: "don_susan"},
+  {field: "ethics", req: true, err_msg: "Please agree to the OTIS Code of Ethics by clicking the checkbox above."}
+];
+
+payDues = [
+  {field: "email"},
+  {field: "fname"},
+  {field: "lname"},
+  {field: "card_num", req: true, err_msg: "Please enter a valid Credit Card Number."},
+  {field: "exp_month", dd_field: "exp_month", req: true, err_msg: "Please select card expiry month/year."},
+  {field: "exp_year", dd_field: "exp_year"},
+  {field: "country", req: true, err_msg: "Please select a country.", dd_field: "country"},
+  {field: "add1", req: true, err_msg: "Please enter the Address 1."},
+  {field: "city", req: true, err_msg: "Please enter the City."},
+  {field: "state", req: true, err_msg: "Please enter the State."},
+  {field: "zip", req: true, err_msg: "Please enter the zip."},
+  {field: "phone"}
+];
+
+memberSearchDir = [
+  {field: "company"},
+  {field: "mcat[]", dd_field: "mcat"},
+  {field: "country", dd_field: "country"},
+  {field: "state", dd_field: "state"}
+];

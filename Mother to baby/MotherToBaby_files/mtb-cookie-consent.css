@@ -1,0 +1,52 @@
+
+#cookie-msg a.btn-aceptar {
+	font-family: 'Nunito Sans', sans-serif !important;
+        text-align: center !important;
+        text-decoration: none !important;
+        text-transform: uppercase !important;
+        color: #ffffff !important;
+        font-weight: normal !important;
+        font-style: normal !important;
+        padding: 12px 45px !important;
+	margin: 12px auto !important;
+        font-size: 16px !important;
+        letter-spacing: 1.07px !important;
+        display: block !important;
+        box-sizing: border-box !important;
+        line-height: normal !important;
+        background-color: #ed7818 !important;
+	border-radius: 6px !important;
+	border: none !important;
+	max-width: fit-content !important;
+}
+
+#cookie-msg a.btn-aceptar:hover {
+        background-color: #7a47bf !important;
+}
+
+#cookie-msg {
+	z-index: 1000 !important;
+	margin: 0 auto !important;
+	padding: 15px 8% !important;
+}
+
+#cookie-msg .msg {
+	max-width: 1280px;
+	margin: 0 auto;
+	display: block;
+}
+
+#cookie-msg .msg a:not(.btn-aceptar) {
+	color: #ACECDE !important;
+	text-decoration: none !important;
+}
+
+#cookie-msg .msg a:not(.btn-aceptar):hover {
+	color: #E3F9F4 !important;
+}
+
+@media only screen and (max-width: 1450px) {
+	#cookie-msg {
+		z-index: 1000001 !important;
+	}
+}

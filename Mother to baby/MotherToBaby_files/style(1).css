@@ -1,0 +1,24 @@
+.mtb-pregnancy-calculator {
+	z-index: 1000;
+	display: block;
+	position: relative;
+}
+
+.mtb-calc-results-col {
+	display: flex;
+	align-items: center;
+}
+
+.mtb-calc-date {
+	margin-right: 35px;
+}
+
+.mtb-calc-fields {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+}
+
+.mtb-calc-fields label {
+	font-weight: bold;
+}

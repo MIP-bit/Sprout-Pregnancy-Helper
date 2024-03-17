@@ -1,0 +1,24 @@
+function mtb_scroll_to_form(form_id) {
+	form_selector = "#gform_wrapper_" + form_id;
+	console.log("header height:" + jQuery("header.site-header").height());
+	console.log("form_selector: " + form_selector);
+	jQuery('html, body').animate({
+		scrollTop: (jQuery(form_selector).offset().top - (jQuery("header.site-header").height())),
+			},
+			500,
+			'linear'
+		)
+}
+
+function mtb_scroll_to_anchor(anchor_selector) {
+	console.log("header height:" + jQuery("header.site-header").height());
+	//console.log("anchor_selector: " + anchor_selector);
+	console.log("anchor offset: " + jQuery(anchor_selector).offset().top);
+	console.log("anchor offset: " + jQuery(anchor_selector).height());
+	jQuery('html, body').animate({
+		scrollTop: (jQuery(anchor_selector).offset().top - jQuery(anchor_selector).height() - (jQuery("header.site-header").height())),
+			},
+			500,
+			'linear'
+		)
+}

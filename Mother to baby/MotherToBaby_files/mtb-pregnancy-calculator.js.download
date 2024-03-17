@@ -1,0 +1,82 @@
+( function( $ ) {
+
+	var settings;
+
+	function pregnancy_calculator(options) {
+		settings = $.extend({
+		// These are the defaults.
+			period_label: "First Date of Last Menstrual Period *",
+			cycle_label: "Average Length of Cycles *",
+			button_label: "Calculate",
+			fertility_window_label: "Estimated Fertility Window",
+			conception_date_label: "Estimated Conception Date",
+			gestational_age_label: "Estimated Gestational Age",
+			gestational_age_tip: "Tip: How far along your pregnancy is.",
+			due_date_label: "Estimated Due Date",
+			weeks: "weeks",
+			results_title: "Pregnancy Calculator Results",
+			due_date_tip: "Fun Fact: Only 5% of babies are born on their due date!"
+		}, options );
+ 
+		var my_locale = $(this).data("locale");
+		var my_html = '<div class="mtb-calc-fields"><div class="mtb-calc-date"><label for="last-period-datepicker">' + settings.period_label + '</label>';
+		my_html += '<p><input type="text" id="last-period-datepicker"></p></div>';
+		my_html += '<div class="mtb-calc-cycle"><label for="cycle-length">' + settings.cycle_label + '</label>';
+		my_html += '<p><input type="text" id="cycle-length"></p></div></div>';
+		my_html += '<p><input id="pregnancy-calculate" type="submit" name="Submit" class="" value="' + settings.button_label + '" /></p>';
+		$(this).append(my_html);
+		$("#last-period-datepicker").datepicker();
+		$("#cycle-length").numeric({negative:false});
+		$("#pregnancy-calculate").click(get_due_date);
+		$("#pregnancy-calculate").data("locale", my_locale);
+	}
+
+	function get_due_date() {
+		var my_locale = $(this).data("locale");
+		var my_date_format = {dateStyle: "long"};
+		var start_date = $("#last-period-datepicker").val();
+		var cycle_length = $("#cycle-length").val();
+		var preg = calculatePregnancy(start_date, cycle_length);
+		//mtb-preg-calc-results
+		var ovulation_start_date = new Date(preg.ovulation_start * 1000);
+		var ovulation_end_date = new Date(preg.ovulation_end * 1000);
+		var due_date = new Date(preg.duedate * 1000);
+		var conception_date = new Date(preg.conception * 1000);
+		var my_html = '<h2>' + settings.results_title + '</h2>';
+		my_html += '<p><strong>' + settings.fertility_window_label + '</strong><br>' + ovulation_start_date.toLocaleDateString(my_locale, my_date_format) + ' to ' + ovulation_end_date.toLocaleDateString(my_locale, my_date_format) + '</p>';
+		my_html += '<p><strong>' + settings.conception_date_label + '</strong><br>' + conception_date.toLocaleDateString(my_locale, my_date_format) + '</p>';
+		my_html += '<p><strong>' + settings.gestational_age_label + '</strong><br>' + preg.gestage + ' ' + settings.weeks + '<br>' + settings.gestational_age_tip + '</p>';
+		my_html += '<p><strong>' + settings.due_date_label + '</strong><br>' + due_date.toLocaleDateString(my_locale, my_date_format) + '<br>' + settings.due_date_tip + '</p>';
+		$(".mtb-preg-calc-results").html(my_html);
+	}
+
+	function calculatePregnancy(last_period, cycle_length) {
+		var preg = {
+			menstrual:0,
+			ovulation:0,
+			conception:0,
+			ovulation_start:0,
+			ovulation_end:0,
+			duedate:0,
+			gestage:0
+		}
+
+		var menstrual = Number( new Date( last_period ) ) / 1000;
+		preg.menstrual = menstrual;
+		var cycle = Number( cycle_length );
+		var today = Number( new Date() ) / 1000;
+
+		preg.ovulation = menstrual + (cycle * 86400) - (14 * 86400);
+		preg.conception = menstrual + (cycle * 86400) - (14 * 86400);
+		preg.ovulation_start = preg.ovulation - (5 * 86400);
+		preg.ovulation_end = preg.ovulation + (5 * 86400);
+		preg.duedate = preg.ovulation + (266 * 86400);
+		time_pregnant = today - preg.ovulation;
+		//preg.gestage = Math.round(time_pregnant / (7 * 86400));
+		preg.gestage = Math.floor((((280 * 86400) - (preg.duedate - today)) / 86400) / 7);
+		return preg;
+	}
+
+	$.fn.mtb_pregnancy_calculator = pregnancy_calculator;
+
+})( jQuery );

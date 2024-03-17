@@ -1,0 +1,167 @@
+/**
+ * This script adds the jquery effects to the Monochrome Pro Theme.
+ *
+ * @package Monochrome\JS
+ * @author StudioPress
+ * @license GPL-2.0-or-later
+ */
+( function( $ ) {
+
+	// Cache DOM selectors.
+	var $header    = $( '.site-header' ),
+		$hsToggle  = $( '.toggle-header-search' ),
+		$hsWrap    = $( '#header-search-wrap' ),
+		$hsInput   = $hsWrap.find( 'input[type="search"]' ),
+		$footer    = $( '.site-footer' ),
+		$container = $( '.site-container' );
+
+	var mtb_fs_accordion_state = '';
+
+	// cookie function
+	function getCookie(cname) {
+		var name = cname + "=";
+		var decodedCookie = decodeURIComponent(document.cookie);
+		var ca = decodedCookie.split(';');
+		for(var i = 0; i <ca.length; i++) {
+			var c = ca[i];
+			while (c.charAt(0) == ' ') {
+				c = c.substring(1);
+			}
+			if (c.indexOf(name) == 0) {
+				return c.substring(name.length, c.length);
+			}
+		}
+		return "";
+	}
+
+	// Make sure JS class is added.
+	$( document ).ready( function() {
+		$( 'body' ).addClass( 'js' );
+		if (getCookie("mtb-covid-notice-viewed") == "") {
+			document.cookie = "mtb-covid-notice-viewed=Yes; Path=/";
+			$( '#covid-dialog' ).dialog( { resizable: false,
+							modal: true } );
+		}
+		if ( $( '.mtb-fact-sheet-list' ) ) {
+			accordion_state = sessionStorage.getItem('mtb_fs_accordion_state');
+			console.log("MTB – retrieve accordion state: " + accordion_state);
+			if ( accordion_state ) {
+				$( '.mtb-fact-sheet-list details' ).removeAttr('open');
+				$( accordion_state ).attr('open','');
+			}
+			$( '.mtb-fact-sheet-list details' ).on( 'toggle', function () {
+				mtb_fs_accordion_state = '';
+				$( '.mtb-fact-sheet-list [open]' ).each( function () {
+					if ( mtb_fs_accordion_state == '' ) {
+						mtb_fs_accordion_state += '#' + $( this ).attr('id');
+					} else {
+						mtb_fs_accordion_state += ', #' + $( this ).attr('id');
+					}
+				});
+				sessionStorage.setItem('mtb_fs_accordion_state', mtb_fs_accordion_state);
+				console.log("MTB – set accordion state: " + mtb_fs_accordion_state);
+			});
+		}
+	});
+
+	// show shopping cart icon
+	$( document ).ready( function() {
+		$( 'body' ).addClass( 'js' );
+		var cart_count = getCookie("woocommerce_items_in_cart");
+		if (cart_count != "") {
+			$( '#mtb-header-cart' ).show();
+		} else {
+			$( '#mtb-header-cart' ).hide();
+		}
+	});
+
+	// Run on page scroll.
+	$( window ).scroll( function() {
+
+		// Toggle header class after threshold point.
+		if ( 50 < $( document ).scrollTop() ) {
+			$( '.site-container' ).addClass( 'shadow' );
+		} else {
+			$( '.site-container' ).removeClass( 'shadow' );
+		}
+
+	});
+
+	// Set the container margin to the footer height for effect.
+	//$container.css( 'margin-bottom', $footer.outerHeight() );
+
+	// Handler for click a show/hide button.
+	$hsToggle.on( 'click', function( event ) {
+
+		event.preventDefault();
+
+		if ( $( this ).hasClass( 'close' ) ) {
+			hideSearch();
+		} else {
+			showSearch();
+		}
+
+	});
+
+	// Handler for pressing show/hide button.
+	$hsToggle.on( 'keydown', function( event ) {
+
+		// If tabbing from toggle button, and search is hidden, exit early.
+		if ( 9 === event.keyCode && ! $header.hasClass( 'search-visible' ) ) {
+			return;
+		}
+
+		event.preventDefault();
+		handleKeyDown( event );
+
+	});
+
+	// Hide search when tabbing or escaping out of the search bar.
+	$hsInput.on( 'keydown', function( event ) {
+
+		// Tab: 9, Esc: 27.
+		if ( 9 === event.keyCode || 27 === event.keyCode ) {
+			hideSearch( event.target );
+		}
+
+	});
+
+	// Hide search on blur, such as when clicking outside it.
+	//$hsInput.on( 'blur', hideSearch );
+
+	// Helper function to show the search form.
+	function showSearch() {
+
+		$header.addClass( 'search-visible' );
+		$hsWrap.fadeIn( 'fast' ).find( 'input[type="search"]' ).focus();
+		$hsToggle.attr( 'aria-expanded', true );
+
+	}
+
+	// Helper function to hide the search form.
+	function hideSearch() {
+
+		$hsWrap.fadeOut( 'fast' ).parents( '.site-header' ).removeClass( 'search-visible' );
+		$hsToggle.attr( 'aria-expanded', false );
+
+	}
+
+	// Keydown handler function for toggling search field visibility.
+	function handleKeyDown( event ) {
+
+		// Enter/Space, respectively.
+		if ( 13 === event.keyCode || 32 === event.keyCode ) {
+
+			event.preventDefault();
+
+			if ( $( event.target ).hasClass( 'close' ) ) {
+				hideSearch();
+			} else {
+				showSearch();
+			}
+
+		}
+
+	}
+
+}( jQuery ) );

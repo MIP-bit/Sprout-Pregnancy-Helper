@@ -1,0 +1,646 @@
+window.$ = jQuery;
+
+var JoynJS = {
+	validateContainer: function ($container, fieldSettings) {
+		var valid = true, value = "", field, req, $el = "", display = "",
+			that = this, firstInvalid = false, indivElem = true, gdprValid = false,
+			countryCode = that.compValue($container.find("[name='country']"));
+
+		this.invalidateErrors($container);
+
+		$.each(fieldSettings, function(fieldItem) {
+			fieldItem = this;
+			field     = fieldItem.field;
+			req       = (fieldItem.req)? true : false;
+			$el       = $container.find("[name='"+field+"']");
+			value     = that.compValue($el);
+			display   = $el.css("display");
+			indivElem = true;
+
+			if (req && !value && display !== "none") {
+				indivElem = false;
+			}
+
+			if ($el.prop('type') === "email") {
+				indivElem = that.validateEmail(value);
+			}
+
+			if ($el.prop('type') === "password" && value.length < 6) {
+				indivElem = false;
+			}
+
+			if ($el.prop('name') === "repass") {
+				indivElem = that.validatePass(value, $container.find("[name='pass']").val());
+			}
+
+			if ($el.prop('name') === "dob") {
+				indivElem = (new Date(value) !== "Invalid Date" && !isNaN(new Date(value)))? true : false;
+			}
+
+			if ($el.prop('name') === "consent") {
+				if ($el.is(':checked') === false) {
+					gdprValid = true;
+					indivElem = false;
+				} else {
+					indivElem = true;
+				}
+			}
+
+			if ($el.prop('name') === "ethics") {
+				if ($el.is(':checked') === false) {
+					valid     = false;
+					indivElem = false;
+				} else {
+					indivElem = true;
+				}
+			}
+
+			if (!indivElem) {
+				$el.closest('.form-group').find('.err_msg').css('display', 'block').html(fieldItem.err_msg);
+				valid = false;
+			}
+
+			if (!indivElem && !firstInvalid) firstInvalid = $el;
+		});
+
+		if (gdprValid) {
+			if (confirm('Please note we do not currently have consent to send you emails.  This means you will not receive any emails related to the society, meeting or membership.\n\n Click OK to continue or Cancel to Update the consent.')) {
+				if (!valid) firstInvalid.focus();
+				return valid;
+			} else {
+				$container.find("[name='consent']").focus();
+				return false;
+			}
+		} else {
+			if (!valid) firstInvalid.focus();
+			return valid;
+		}
+	},
+
+	invalidateErrors: function($container) {
+		$('.err_msg').html("");
+		$container.find('.err_msg').css('display', 'none')
+	},
+
+	validatePass: function (pass, compVal) {
+		var valid   = true;
+
+		if (pass !== compVal) {
+			valid = false;
+		}
+
+		return valid;
+	},
+
+	countryChangeHandler: function (event, $container) {
+		var selectedVal = $(event.currentTarget).val(),
+			usFlag      = false,
+			that        = this;
+
+		$container.find(".gdpr-consent").css("display", "none");
+
+		if (selectedVal === "US") {
+			usFlag = true;
+		}
+
+		if ($.inArray(selectedVal, that.getEUcountries()) > -1) {
+			$container.find(".gdpr-consent").css("display", "block");
+		}
+
+		$container.find("[name='state']").css("display", (usFlag)? "none" : "block");
+		$container.find("[name='us_state']").css("display", (usFlag)? "block" : "none");
+	},
+
+	// researchTypeChangeHandler: function (event, $container) {
+	// 	var selectedVal = $(event.currentTarget).val();
+
+	// 	$("#other-research-type").css('display', "none");
+	// 	$container.find("[name='research_type_other']").css("display", "none");
+	// 	$container.find("[name='research_type_other']").removeAttr('required');
+	// 	$container.find("[name='research_type_other']").val("");
+
+	// 	if (selectedVal === "O") {
+	// 		$("#other-research-type").css('display', "block");
+	// 		$container.find("[name='research_type_other']").css("display", "block");
+	// 		$container.find("[name='research_type_other']").attr('required', '');
+	// 	}
+	// },
+
+	getEUcountries: function () {
+		var euCountries = ["GB","AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","HU","IE","IT","LV","LT","LU","MT","NL","PT","RO","SI","ES","SE","GR","PL","SK"];
+
+		return euCountries;
+	},
+
+	initliizeStateVal: function ($container) {
+		var key = $container.find("[name='country']").val(),
+			usFlag = false, that = this;
+
+		if (key === "US") usFlag = true;
+
+		$container.find(".gdpr-consent").css("display", "none");
+
+		if ($.inArray(key, that.getEUcountries()) > -1) {
+			$container.find(".gdpr-consent").css("display", "block");
+		}
+
+		$container.find("[name='state']").css("display", (usFlag)? "none" : "block");
+		$container.find("[name='us_state']").css("display", (usFlag)? "block" : "none");
+	},
+
+	initliizeResearchTypeVal: function ($container) {
+		var selectedVal = $container.find("[name='research_type[]']").val();
+
+		$("#other-research-type").css('display', "none");
+		$container.find("[name='research_type_other']").css("display", "none");
+		$container.find("[name='research_type_other']").removeAttr('required');
+	
+		if ((selectedVal && ($.inArray("O", selectedVal) > -1) || $.inArray("ANO", selectedVal) > -1)) {
+			$("#other-research-type").css('display', "block");
+			$container.find("[name='research_type_other']").css("display", "block");
+			$container.find("[name='research_type_other']").attr('required', '');
+		} else {
+			$container.find("[name='research_type_other']").val("");
+		}
+	},
+
+	initializeContainer: function ($container, options) {
+		var field, req, $el = "", lblTxt = "", ddField = "", propName =  "", 
+			ddValues = [], $ddDom = "", fieldVal = "", selected = "", multiple = false,
+			reqTemplate      = "<span class='required'>*</span>",
+			errTemplate      = "<span class='err_msg'></span>",
+			fieldSettings    = options.fields,
+			dropdowns        = options.dropdowns,
+			userData         = (options.data)? options.data : {},
+			custTemp         = (options.cust_temp)? options.cust_temp : "";
+
+		$("#tisAffiliated").css('display', 'none');
+		$("#otherOrgInv").css('display', 'none');
+		$("#mediaExpertise").css('display', 'none');
+
+		$.each(fieldSettings, function(fieldItem) {
+			fieldItem   = this;
+			field   	= fieldItem.field;
+			propName 	= field.replace(/[\])}[{(]/g, '');
+			ddField 	= (fieldItem.dd_field)? fieldItem.dd_field : "";
+			req     	= (fieldItem.req)? true : false;
+			$el 		= $container.find("[name='" + field + "']");
+			lblTxt  	= "";
+			fieldVal 	= ($.isEmptyObject(userData) === false && userData.hasOwnProperty(propName))? userData[propName] : "";
+
+			if (req && field !== "us_state") {
+				lblTxt = $el.closest('.form-group').find('label').text();
+				$el.closest('.form-group').find('label').html(lblTxt + reqTemplate);
+
+				if (custTemp !== "") errTemplate = custTemp;
+
+				$el.closest('.form-group').append(errTemplate);
+			}
+
+			if (field !== "mcat" && field !=="media_req" && ddField === "") {
+				$el.val(fieldVal);
+			}
+
+			if (field === "us_state") {
+				fieldVal = userData.state;
+			}
+
+			if (field === "consent" && userData.consent == true) {
+				$el.prop("checked", true);
+			}
+
+			if (field === "ethics" && userData.ethics == true) {
+				$el.prop("checked", true);
+			}
+
+			if (field === "search_dir" && userData.search_dir == true) {
+				$el.prop("checked", true);
+			}
+
+			if (field === "tis_info" && userData.tis_info == true) {
+				$el.prop("checked", true);
+				$("#tisAffiliated").css('display', 'block');
+			}
+
+			if (field === "orginv" && userData.orginv == "O") {
+				$("#otherOrgInv").css('display', 'block');
+			}
+
+			if (field === "media_req" && userData.media_req == true) {
+				$("#media_req_yes").prop("checked", true);
+				$("#mediaExpertise").css('display', 'block');
+			} else if (field === "media_req" && userData.media_req == false) {
+				$("#media_req_no").prop("checked", true);
+			}
+
+			if (ddField !== "") {
+				ddValues = (dropdowns.hasOwnProperty(ddField))? dropdowns[ddField] : [];
+				$ddDom   = "<option value=''>Select " + lblTxt + "</option>";
+				multiple = $el.prop("multiple");
+				selected = "";
+
+				if (!multiple)
+					fieldVal = [fieldVal];
+
+				$.each(ddValues, function(ddItem) {
+					ddItem   = this;
+					selected = ($.inArray(ddItem.k, fieldVal) !== -1)? "selected" : "";
+					$ddDom   = $ddDom + "<option value='" + ddItem.k + "'" + selected + ">" + ddItem.v + "</option>";
+				});
+
+				$el.html($ddDom);
+			}
+		});
+	},
+
+	validateEmail: function (email) {
+		var pattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            valid   = true;
+
+		if (!email || !(email.match(pattern))) {
+            valid = false;
+        }
+
+        return valid;
+	},
+
+	compValue: function (comp) {
+      	var value;
+
+		value = comp.val();
+      	return value;
+  	},
+
+	verifyEmailAddress: function (event, $container) {
+		var email     = $(event.currentTarget).val(),
+			valid     = this.validateEmail(email),
+			verifyURL = "/custom-apis/",
+			that      = this;
+
+		that.updateEmailError($container, false);
+
+		if (valid) {
+				$.ajax({
+				url: verifyURL,
+				dataType: 'json',
+				data: {email: email},
+				type: 'POST',
+				success: function (response) {
+					if (response.existing === true) {
+						that.updateEmailError($container, true);
+						$(event.currentTarget).focus();
+						return false;
+					}
+				}
+			});
+		}
+	},
+
+	checkUserLoggedIn: function() {
+		var searchURL = "/custom-apis/",
+			that      = this,
+			def       = $.Deferred();
+
+		$.ajax({
+			url: searchURL,
+			dataType: 'json',
+			data: {chk_logged_in: true},
+			type: 'POST',
+			success: function (response) {
+				if (response) {
+					def.resolve();
+					return response.status;
+				}
+			}
+		});
+	},
+
+	getSearchResults: function (searchTxt, $container, _callBack) {
+		var searchURL = "/custom-apis/",
+			that      = this,
+			$dom      = "";
+
+		if ($.isEmptyObject(searchTxt) === false) {
+			$.ajax({
+				url: searchURL,
+				dataType: 'json',
+				data: searchTxt,
+				type: 'POST',
+				success: function (response) {
+					if (response) {
+						$dom = that.processSearchResults(response, $container);
+						$container.find('.aff-search-results').html($dom);
+
+						if (typeof _callBack === "function") _callBack(response);
+						$("#searchResultContainer").find("[data-toggle='tooltip']").tooltip();
+					}
+				}
+			});
+		}
+	},
+
+	getUserDetails: function (affId, _callBack) {
+		var getUserDetailsURL = "/custom-apis/",
+			that      = this,
+			$dom      = "";
+
+		if (affId !== 0) {
+			$.ajax({
+				url: getUserDetailsURL,
+				dataType: 'json',
+				data: {aff_id: affId},
+				type: 'POST',
+				success: function (response) {
+					if (response) {
+						if (typeof _callBack === "function") _callBack(response);
+					}
+				}
+			});
+		}
+	},
+
+	updateEmailError: function($container, err) {
+		var msg = 'We found a match for this email id in our system. If you are a returning user please use the Login link on the top and logon using this email address. If you do not remember your password, click <a href="/reset-password/">here</a> to reset the password.',
+			$el = $container.find("[name='email']");
+
+		if (err === false) msg = "";
+
+		$el.closest('.form-group').find('.err_msg').html(msg);
+	},
+
+	doSilentFormPost: function (url, params, target, method) {
+		var invisibleForm, key;
+		
+		if (typeof target === "undefined") target = "_blank";
+		if (typeof method === "undefined") method = "post";
+	
+		invisibleForm = '<form id="invisible-form" action="' + url + '" method="' + method + '" target="' + target + '">';
+	
+		for(key in params) {
+			if (params.hasOwnProperty(key)) {
+				invisibleForm += '<input name="' + key + '" type="hidden" value="' + params[key] + '">';
+			}
+		}
+	
+		invisibleForm += '</form>';
+	
+		$("body").append(invisibleForm);
+		$("body").find("#invisible-form").submit();
+		$("body").find("#invisible-form").remove();
+	},
+
+	processSearchResults: function (data, $container) {
+		var result = data.result,
+			count  = data.total_count,
+			$dom   = "", $template = "", that = this;
+
+		$.each(result, function (aff) {
+			aff = this;
+
+			if (aff.hasOwnProperty('search_dir') && aff.search_dir == true) {
+				$dom = $dom + that.bulidSearchTemp(aff);
+			}
+		});
+
+		return $dom;
+	},
+
+	// bulidSearchTemp: function (aff) {
+	// 	var $template  = "";
+	// 	var searchDir  = aff.search_dir;
+
+	// 	$template = "<div class='aff-item'>";
+
+	// 	if (aff.hasOwnProperty('name')) {
+	// 		$template = $template + "<div class='aff-name'>" + aff.name;
+
+	// 		if (aff.hasOwnProperty('biography') && aff.biography !== "") {
+	// 			$template = $template + "<div class='glyphicon glyphicon-info-sign' data-placement='right' style='margin: 0px 0px 0px 10px' data-toggle='tooltip' title='"+aff.biography+"'></div>";
+	// 		}
+
+	// 		$template = $template + "</div>";
+	// 	} 
+
+	// 	if (aff.hasOwnProperty('prof_pic') && aff.prof_pic !== "") {
+	// 		$template = $template + "<div class='aff-prof-pic'><span style='display: block;max-width: 100%;width: 110px;'>";
+	// 		$template = $template + "<img class='cn-image' src='https://pmg.joynadmin.org/documents/1004/profile_pics/" + aff.prof_pic + "'>";
+	// 		$template = $template + "</span></div>";
+	// 	} else {
+	// 		$template = $template + "<div class='aff-prof-pic'><span style='display: block;max-width: 100%;width: 110px;'>";
+	// 		$template = $template + "<img class='cn-image' src='https://pmg.joynadmin.org/images/association_logos/no_image.png'>";
+	// 		$template = $template + "</span></div>";
+	// 	}
+
+	// 	if (aff.hasOwnProperty('primary_contact') && aff.primary_contact !== "") {
+	// 		$template = $template + "<div class='aff-company'><b>Contact: </b>" + aff.primary_contact + "</div>";
+	// 	} else if (aff.hasOwnProperty('company')) {
+	// 		$template = $template + "<div class='aff-company'>" + aff.company + "</div>";
+	// 	}
+
+	// 	if (aff.hasOwnProperty('address') && aff.address !== "") {
+	// 		$template = $template + "<div class='aff-addr-item'>";
+	// 		$template = $template + "<img src='/wp-content/images/ui/location-pin.png'/>";
+	// 		$template = $template + "<div class='aff-addr'>" + aff.address; 
+
+	// 		if (aff.hasOwnProperty('country')) $template = $template + "<br>" + aff.country;
+
+	// 		$template = $template + "</div>";
+	// 		$template = $template + "</div>";
+	// 	} 
+
+	// 	if (aff.hasOwnProperty('phone') && searchDir == false) {
+	// 		$template = $template + "<div class='aff-addr-item'>";
+	// 		$template = $template + "<img src='/wp-content/images/ui/phone.png'/>";
+	// 		$template = $template + "<div class='aff-addr'>" + aff.phone + "</div>";
+	// 		$template = $template + "</div>";
+	// 	}
+
+	// 	if (aff.hasOwnProperty('fax') && aff.fax !== "") {
+	// 		$template = $template + "<div class='aff-addr-item'>";
+	// 		$template = $template + "<img src='/wp-content/images/ui/fax_selected.png'/>";
+	// 		$template = $template + "<div class='aff-addr'>" + aff.fax + "</div>";
+	// 		$template = $template + "</div>";
+	// 	}
+
+	// 	if (aff.hasOwnProperty('email') && aff.email !== "") {
+	// 		$template = $template + "<div class='aff-addr-item'>";
+	// 		$template = $template + "<img src='/wp-content/images/ui/envelope.png'/>";
+	// 		$template = $template + "<div class='aff-addr'><a href='mailto:" + aff.email + "'>" + aff.email + "</a></div>";
+	// 		$template = $template + "</div>";
+	// 	}
+
+	// 	if (aff.hasOwnProperty('primary_email')) {
+	// 		$template = $template + "<div class='aff-addr-item'>";
+	// 		$template = $template + "<img src='/wp-content/images/ui/envelope.png'/>";
+	// 		$template = $template + "<div class='aff-addr'><a href='mailto:" + aff.primary_email + "'>" + aff.primary_email + "</a></div>";
+	// 		$template = $template + "</div>";
+	// 	}
+
+	// 	$template = $template + "</div>";
+
+	// 	return $template;
+	// },
+
+	bulidSearchTemp: function (aff) {
+		var $template = "";
+		
+		$template = "<div class='aff-item'>";
+
+	
+		if (aff.hasOwnProperty('prof_pic') && aff.prof_pic !== "") {
+			$template = $template + "<div class='aff-prof-pic'><span style='display: block;max-width: 100%;width: 110px;'>";
+			$template = $template + "<img class='cn-image' src='https://pmg.joynadmin.org/documents/1004/profile_pics/" + aff.prof_pic + "'>";
+			$template = $template + "</span></div>";
+		} else {
+			$template = $template + "<div class='aff-prof-pic'><span style='display: block;max-width: 100%;width: 110px;'>";
+			$template = $template + "<img class='cn-image' src='https://pmg.joynadmin.org/images/association_logos/no_image.png'>";
+			$template = $template + "</span></div>";
+		}
+
+		if (aff.hasOwnProperty('name')) $template = $template + "<div class='aff-name' onclick='getAffDetails(" + aff.aff_id + ");'>" + aff.name + "</div>";
+		if (aff.hasOwnProperty('jtitle')) $template = $template + "<div class='aff-title'>" + aff.jtitle + "</div>";
+		if (aff.hasOwnProperty('company')) $template = $template + "<div class='aff-company'>" + aff.company + "</div>";
+
+
+		// if (aff.hasOwnProperty('primary_contact') && aff.primary_contact !== "") {
+		// 	$template = $template + "<div class='aff-company'><b>Contact: </b>" + aff.primary_contact + "</div>";
+		// } else if (aff.hasOwnProperty('company')) {
+		// 	$template = $template + "<div class='aff-company'>" + aff.company + "</div>";
+		// }
+
+		if (aff.hasOwnProperty('address')) {
+			$template = $template + "<div class='aff-addr-item'>";
+			$template = $template + "<img src='/wp-content/images/ui/location-pin.png'/>";
+			$template = $template + "<div class='aff-addr'>" + aff.address; 
+
+			if (aff.hasOwnProperty('country')) $template = $template + "<br>" + aff.country;
+
+			$template = $template + "</div>";
+			$template = $template + "</div>";
+		} 
+
+		// if (aff.hasOwnProperty('phone')) {
+		// 	$template = $template + "<div class='aff-addr-item'>";
+		// 	$template = $template + "<img src='/wp-content/images/ui/phone.png'/>";
+		// 	$template = $template + "<div class='aff-addr'>" + aff.phone + "</div>";
+		// 	$template = $template + "</div>";
+		// }
+
+		// if (aff.hasOwnProperty('fax') && aff.fax !== "") {
+		// 	$template = $template + "<div class='aff-addr-item'>";
+		// 	$template = $template + "<img src='/wp-content/images/ui/fax_selected.png'/>";
+		// 	$template = $template + "<div class='aff-addr'>" + aff.fax + "</div>";
+		// 	$template = $template + "</div>";
+		// }
+
+		if (aff.hasOwnProperty('email')) {
+			$template = $template + "<div class='aff-addr-item'>";
+			$template = $template + "<img src='/wp-content/images/ui/envelope.png'/>";
+			$template = $template + "<div class='aff-addr'><a href='mailto:" + aff.email + "'>" + aff.email + "</a></div>";
+			$template = $template + "</div>";
+		}
+
+		$template = $template + "</div>";
+
+		return $template;
+	},
+
+	bulidPayDuesTemp: function (bills, $container) {
+		var $dom = "", that = this, amount = 0, $adjTemp = "", $totalTemp = "", uom = "USD", total = 0, promo = 0;
+
+		$.each(bills, function(bill) {
+			bill     = this;
+			$adjTemp = "";
+			$promoTemp = "";
+			amount   = bill.bill_amt;
+			uom		 = bill.uom;
+			promo    = 0;
+
+			if (bill.promo_code === 1 && bill.adj_det.length === 0) {
+				promo = 1;
+
+				$promoTemp = $promoTemp + "<tr>";
+				$promoTemp = $promoTemp + "<td colspan='5' style='text-align: right;border-top: 0px;'><div class='promocode-row' data-prodcode='" + bill.p_code + "' data-billId='" + bill._id +"'><span>Enter promo code</span><input class='form-control input input-sm' type='text'><button onclick='return applyPromoCodeV2(event);' class='btn btn-sm btn-success' style='background: #ed7818;'>Apply</button></div><div class='promocode-result' style='color: rgb(4, 4, 149); display: none;'>Discount has been applied.</div></td>";
+				$promoTemp = $promoTemp + "<td colspan='1' style='border-top: 0px;'>" + "</td>";
+				$promoTemp = $promoTemp + "</tr>";
+			}
+
+			if (bill.adj_det && bill.adj_det.length > 0 && bill.promo_used) {
+				amount = bill.gross_amt;
+
+				$.each(bill.adj_det, function(adjItem){
+					adjItem = this;
+				});
+
+				$adjTemp = $adjTemp + "<tr>";
+				$adjTemp = $adjTemp + "<td colspan='5' style='text-align: right;border-top: 0px;'><div class='promocode-row' data-prodcode='" + bill.p_code + "' data-billId='" + bill._id +"'><span>Enter promo code</span><input class='form-control input input-sm' type='text'><button onclick='return applyPromoCodeV2(event);' class='btn btn-sm btn-success' style='background: #ed7818;'>Apply</button></div><div class='promocode-result' style='color: rgb(4, 4, 149); display: block;'>Discount has been applied.</div><div style='color: rgb(4, 4, 149); display: block;'>"+ bill.promo_used +" promo code(s) applied.</div</td>";
+				$adjTemp = $adjTemp + "<td colspan='1' class='promocode-amt' style='border-top: 0px;'>(" + parseFloat(bill.adj_amt).toFixed(2) + " " + bill.uom + ")</td>";
+				$adjTemp = $adjTemp + "</tr>";
+			}
+
+			total = total + amount;
+
+			$dom = $dom + "<tr>";
+			$dom = $dom + "<td><input type='checkbox' onclick='billClickHandler();' name='bill_id_" + bill._id + "' data-prodcode='" + bill.p_code + "' data-billId='" + bill._id +"' data-promo='" + promo + "' value='" + parseFloat(bill.bill_amt) + "' checked></td>";
+			$dom = $dom + "<td>" + bill._id + "</td>";
+			$dom = $dom + "<td>" + that.convertDate(bill.bdate.sec) + " - " + that.convertDate(bill.edate.sec) + "</td>";
+			$dom = $dom + "<td>" + bill.p_desc + "</td>";
+			$dom = $dom + "<td>" + bill.qty + "</td>";
+			$dom = $dom + "<td>" + parseFloat(amount).toFixed(2) + " " + bill.uom + "</td>";
+			$dom = $dom + "</tr>";
+
+			if ($promoTemp !== "") $dom = $dom + $promoTemp;
+			if ($adjTemp !== "") $dom = $dom + $adjTemp;
+		});
+
+		$totalTemp = "<tr>";
+		$totalTemp = $totalTemp + "<td colspan='5' style='text-align: right;font-weight: bold'>Total Amount</td>";
+		$totalTemp = $totalTemp + "<td colspan='1'><span id='totalAmt'>" + parseFloat(total).toFixed(2) + "</span> " + uom + "</td>";
+		$totalTemp = $totalTemp + "</tr>";
+
+		$dom = $dom + $totalTemp;
+
+		$container.html($dom);
+	},
+
+	bulidCommitteeTemp: function(commDetail, $container, requiredComm) {
+		var committees = commDetail.committees,
+			propComm   = [], $dom = "", req = false, checked = "";
+			
+		if (typeof requiredComm === "undefined") requiredComm = [];
+
+		if (commDetail.hasOwnProperty('proposed_comm')) {
+			propComm = JSON.parse("[" + commDetail.proposed_comm.committees + "]");
+			$container.find("[name='note']").text(commDetail.proposed_comm.note);
+
+			if (commDetail.proposed_comm.area_expertise) {
+				$container.find("[name='area_expertise']").text(commDetail.proposed_comm.area_expertise);
+			}
+		}
+
+		$.each(committees, function(comm) {
+			comm    = this;
+			req     = false;
+			checked = "";
+			
+			if (requiredComm.length > 0 && $.inArray(comm._id, requiredComm) !== -1) req = true;
+			if (propComm.length > 0 && $.inArray(comm._id, propComm) !== -1) checked = "checked";
+
+			$dom = $dom + "<tr>";
+			$dom = $dom + "<td><input type='checkbox' onclick='cbxClickHandler(event);' name='cbx_" + comm._id + "' value='" + comm._id + "' " + checked + "></td>";
+			$dom = $dom + "<td><label><span class='comm-name has-tip right' data-disable-hover='false' tabindex='1' data-tooltip aria-haspopup='true' data-allow-html='true' data-comm-id='" + comm._id + "' title='" + comm.instruct + "'>" + comm.name;
+			if (req) $dom = $dom + "<span class='required'>*</span>";
+			$dom = $dom + "</span></label></td>"
+			$dom = $dom + "</tr>";
+		});
+
+		$container.find('.comm-list').html($dom);
+	},
+
+	convertDate: function (sec) {
+		function pad(s) { return (s < 10) ? '0' + s : s; }
+		var d = new Date(1970, 0, 1);
+		d.setSeconds(sec);
+		return [pad(d.getMonth()+1), pad(d.getDate()), d.getFullYear()].join('/');
+	  }
+}
